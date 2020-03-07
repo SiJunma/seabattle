@@ -34,6 +34,11 @@ td:hover {
   cursor: pointer;
 }
 
+.td-hover:hover {
+  background-color: transparent;
+  cursor: not-allowed;
+}
+
 ul {
     list-style: none;
     margin: 0;
