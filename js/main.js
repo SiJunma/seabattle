@@ -4,7 +4,8 @@ const record = document.getElementById('record'),
       dead = document.getElementById('dead'),
       enemy = document.getElementById('enemy'),
       again = document.getElementById('again'),
-      header = document.querySelector('.header');
+      header = document.querySelector('.header'),
+      td = document.querySelectorAll('td');
 
 
 const game = {
@@ -138,7 +139,9 @@ const fire = (event) => {
             play.updateData = 'hit';
             ship.hit[index] = 'x';
             const life = ship.hit.indexOf('');
+
             if (life < 0) {
+
                 play.updateData = 'dead';
                 for (const id of ship.location) {
                     show.dead(document.getElementById(id));
@@ -149,7 +152,12 @@ const fire = (event) => {
                 if (game.shipCount < 1) {
                     header.textContent = 'Игра Окончена';
                     header.style.color = 'red';
-                    
+
+                    enemy.classList.add('td-hover');
+                    for (let f = 0; f < td.length; f++) {
+                        td[f].classList.add('td-hover');
+                    }
+
 
                     if (play.shot < play.record || play.record === 0) {
                         localStorage.setItem('seaBattleRecord', play.shot);
@@ -181,3 +189,5 @@ const init = () => {
 };
 
 init();
+
+
