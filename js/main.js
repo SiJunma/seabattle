@@ -212,8 +212,8 @@ const init = () => {
     play.render();
     game.generateShip();
 
-    again.addEventListener('click', () => {
-
+    again.addEventListener('click', (evt) => {
+        evt.preventDefault();
         for (let h = 0; h < td.length; h++) {
             td[h].className = '';
         };
