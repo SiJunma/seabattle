@@ -95,10 +95,19 @@ const play = {
     shot: 0,
     hit: 0,
     dead: 0,
+
     set updateData(data) {
         this[data] += 1;
         this.render();
     },
+
+    clearData() {
+        this.shot = 0;
+        this.hit= 0;
+        this.dead= 0;
+        this.render();
+    },
+
     render() {
         record.textContent = this.record;
         shot.textContent = this.shot;
@@ -204,8 +213,17 @@ const init = () => {
     game.generateShip();
 
     again.addEventListener('click', () => {
-        location.reload();
+
+        for (let h = 0; h < td.length; h++) {
+            td[h].className = '';
+        };
+
+        game.ships = [];
+        game.collision = new Set;
+        play.clearData();
+        game.generateShip();
     });
+    
     record.addEventListener('dblclick', () => {
         localStorage.clear();
         play.record = 0;
