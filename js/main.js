@@ -218,6 +218,7 @@ const init = () => {
             td[h].className = '';
         };
 
+        game.shipCount = 0;
         game.ships = [];
         game.collision = new Set;
         play.clearData();
