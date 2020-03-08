@@ -65,6 +65,11 @@ ul {
     background-image: url('../img/skull.svg'); 
 }
 
+.out-dead {
+  background-image: url('../img/dead-miss.svg');
+  background-size: 10px;
+}
+
 a {
     position: relative;
     width: 300px;

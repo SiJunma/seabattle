@@ -120,6 +120,10 @@ const show = {
         this.changeClass(elem, 'dead')
     },
 
+    deadMiss(elem) {
+        this.changeClass(elem, 'out-dead')
+    },
+
     changeClass(elem, value) {
         elem.className = value;
     }
@@ -145,6 +149,27 @@ const fire = (event) => {
                 play.updateData = 'dead';
                 for (const id of ship.location) {
                     show.dead(document.getElementById(id));
+                }
+
+                for (let k = 0; k < ship.location.length; k++) {
+                    const startCordX = ship.location[k][0] - 1;
+        
+                    for (let j = startCordX; j < startCordX + 3; j++) {
+                        const startCordY = ship.location[k][1] - 1;
+        
+                        for (let z = startCordY; z < startCordY + 3; z++) {
+        
+                            if (j >= 0 && j < 10 && z >= 0 && z < 10) {
+                                const cord = j + '' + z;
+                                
+                                if(!document.getElementById(cord).classList.length) {
+                                show.deadMiss(document.getElementById(cord));
+                                }
+          
+                            }
+                            
+                        }
+                    }
                 }
 
                 game.shipCount -= 1;
