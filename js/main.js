@@ -217,6 +217,13 @@ const init = () => {
         for (let h = 0; h < td.length; h++) {
             td[h].className = '';
         };
+        header.textContent = 'SEA BATTLE';
+        header.style.color = 'black';
+
+        enemy.classList.remove('td-hover');
+        for (let f = 0; f < td.length; f++) {
+            td[f].classList.remove('td-hover');
+        }
 
         game.shipCount = 0;
         game.ships = [];
