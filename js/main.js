@@ -1,12 +1,49 @@
 const record = document.getElementById('record'),
+      globalRecord = document.getElementById('globalRecord'),
       shot = document.getElementById('shot'),
       hit = document.getElementById('hit'),
       dead = document.getElementById('dead'),
       enemy = document.getElementById('enemy'),
       again = document.getElementById('again'),
       header = document.querySelector('.header'),
-      td = document.querySelectorAll('td');
+      td = document.querySelectorAll('td'),
+      recordsContainer = document.querySelector('.recordTable');
+let maxRecord = 100;
 
+const firebaseConfig = {
+apiKey: "AIzaSyAbctuhBK-xZxCWqU0kRIrr8z3v9dVkaTw",
+authDomain: "seabatle-3ec39.firebaseapp.com",
+databaseURL: "https://seabatle-3ec39.firebaseio.com",
+projectId: "seabatle-3ec39",
+storageBucket: "seabatle-3ec39.appspot.com",
+messagingSenderId: "667285416837",
+appId: "1:667285416837:web:998404136bdbddbff372ec"
+};
+// Initialize Firebase
+firebase.initializeApp(firebaseConfig);
+
+const getData = () => {
+    firebase.database().ref().child('seaBattleRecord').once('value')
+        .then(snap => snap.val() ? getRecords(Object.values(snap.val())) : 0).catch(err => console.error(err))
+};
+const getRecords = (obj) => {
+   recordsContainer.innerHTML = '';
+    obj.forEach(el => {
+        el.record < maxRecord ? maxRecord = el.record : 0;
+        recordsContainer.insertAdjacentHTML('beforeend', `
+            <div class="recordItem">
+                <span>Рекорд: </span>
+                <span class="recordValue">${el.record}</span>
+                <span>Поставил</span>
+                <span class="recordName">${el.name}</span>
+                <span class="recordDate">${el.dataRecord}</span>
+            </div>
+        `)
+    });
+    globalRecord.textContent = maxRecord;
+}
+
+getData();
 
 const game = {
     ships: [],
@@ -91,7 +128,7 @@ const game = {
 };
 
 const play = {
-    record: localStorage.getItem('seaBattleRecord') || 0,
+    record: 0,
     shot: 0,
     hit: 0,
     dead: 0,
@@ -191,17 +228,23 @@ const fire = (event) => {
                     for (let f = 0; f < td.length; f++) {
                         td[f].classList.add('td-hover');
                     }
-
+                    
+                    getData();
 
                     if (play.shot < play.record || play.record === 0) {
-                        localStorage.setItem('seaBattleRecord', play.shot);
                         play.record = play.shot;
                         play.render();
+
+                        if (play.record < maxRecord) {
+                            const name = prompt('Вы побили глобальный рекорд! Запишите свой ник для таблицы рекордов:');
+                            const time = new Date();
+                            const obj = {'name': name ? name : 'NoName', 'record': play.shot, 'dataRecord': `${time.getDate()}/${time.getMonth()}/${time.getUTCFullYear()} ${time.getHours()}:${
+                                String(time.getMinutes()).length < 2 ? '0' + String(time.getMinutes()) : time.getMinutes()
+                            }`};
+                            firebase.database().ref().child('seaBattleRecord').push(obj);
+                        }
                     }
-
-                    
                 }
-
             }
         }
     }
@@ -230,6 +273,7 @@ const init = () => {
         game.collision = new Set;
         play.clearData();
         game.generateShip();
+        getData();
     });
     
     record.addEventListener('dblclick', () => {

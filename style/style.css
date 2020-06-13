@@ -126,3 +126,28 @@ a {
     bottom: 0;
     right: 0;
   }
+
+  .globalRecord {
+    margin-top: 40px;
+  }
+
+  .recordTable {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column-reverse;
+  }
+
+  .recordItem {
+    margin-bottom: 15px;
+    text-transform: none;
+    display: flex;
+    align-items: center;
+  }
+
+  .recordName,
+  .recordValue {
+    font-weight: bold;
+    font-size: larger;
+    margin-right: 10px;
+    margin-left: 10px;
+  }

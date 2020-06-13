@@ -29,7 +29,7 @@
         <h1 class="header">Sea Battle</h1>
         <section>
             <ul>
-                <li class="list"><span>Рекорд:</span><span id="record">0</span></li>
+                <li class="list"><span>Твой Рекорд:</span><span id="record">0</span></li>
                 <li class="list"><span>Выстрелов:</span><span id="shot">0</span></li>
                 <li class="list"><span>Попаданий:</span><span id="hit">0</span></li>
                 <li class="list"><span>Потоплено:</span><span id="dead">0</span></li>
@@ -167,7 +167,13 @@
             <span></span>
             Начать заново
         </a>
+
+        <div class="globalRecord"><span>Рекорд: </span><span id="globalRecord">Не поставлен</span></div>
+        <div class="recordTable">
+        </div>
     </main>
+    <script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/7.15.1/firebase-database.js"></script>
     <script src="js/main.js" type="text/javascript"></script>
 </body>
 
